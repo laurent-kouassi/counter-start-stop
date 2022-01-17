@@ -1,23 +1,32 @@
 import logo from './logo.svg';
 import './App.css';
+import { Timer } from './Timer';
+import { useEffect } from 'react';
 
 function App() {
+  const { 
+    seconds, 
+    start, 
+    stop, 
+    pause, 
+    reset, 
+    running} = Timer();
+
+
+    useEffect(() => {
+      // stop decreasing when time is up
+      if(seconds == 0) pause();
+
+    }, [seconds]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div style = {{marginTop: '20px'}}>
+        <button onClick = { running ? pause : start }> START/PAUSE </button>
+        <button onClick = { reset }> RESET </button>
+        <button onClick = { stop }> STOP </button>
+      </div>
+      <span>{seconds}</span>
     </div>
   );
 }
